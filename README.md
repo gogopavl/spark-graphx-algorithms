@@ -13,7 +13,7 @@ All jobs were run on [Spark 2.4.3](https://spark.apache.org/releases/spark-relea
 
 ## Running
 
-To submit a job using one of the scripts run the following commands:
+To submit a job using one of the scripts run the following command:
 
 ```
 ./Spark-2.4.3/bin/spark-shell -i path/to/script --conf spark.driver.args="path/to/dataset"
