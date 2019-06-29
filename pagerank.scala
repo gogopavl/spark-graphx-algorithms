@@ -26,3 +26,12 @@ println("Total runtime: "+ (tic-toc)/1e9d + " seconds")
 // Print top 10 pages based on their pagerank
 ranks.sortBy(_._2, ascending=false).take(10).foreach(println)
 
+
+// Printing Spark conf properties
+println("\n" + sc.getConf.getInt("spark.executor.instances", 123) + "\n")
+
+println(sc.getConf.getAll.mkString("\n") + "\n")
+
+println(sc.getConf.toDebugString + "\n") // Basically same as getAll from above
+
+println(sc.getConf.getExecutorEnv.mkString("\n"))
