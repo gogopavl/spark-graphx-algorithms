@@ -15,36 +15,34 @@ val toc = System.nanoTime
 // Load the edges as a graph
 val graph = GraphLoader.edgeListFile(sc, filepath)
 
+// Source vertex
 val sourceVertex = 1004
-val destinationVertex = 3655
-val maxRecursionDepth = 1
 
-def hasNeighbor( g:Graph[Int, Int], sourceVertex:Long, destinationVertex:Long, maxRecursionDepth:Int ) : Boolean = {
+// Neighborhood degree
+val degree = 2
+
+def nthDegreeNeighbors( g:Graph[Int, Int], sourceVertex:Long, degree:Int ) : Unit = {
 
     val neighbors = g.collectNeighborIds(EdgeDirection.Out).lookup(sourceVertex).head
-    val result = neighbors contains (destinationVertex)
 
     // println("Depth: "+ maxRecursion +" Vertex "+ sourceVertex + " Neighbors: ")
     // println(neighbors.mkString("\n"))
     // println("Contains result = "+ result)
 
-    if (result) {
-        println("Is reachable")
-        return true
+    if (degree == 1) {
+        println(neighbors.mkString(" ")) // Should add them to a data structure instead
+        return
     }
     else {
-        if (maxRecursionDepth > 0){
-            for (i <- 0 until neighbors.length) {
-                hasNeighbor(g, neighbors(i), destinationVertex, maxRecursionDepth-1)
-            }
+        for (i <- 0 until neighbors.length) {
+                nthDegreeNeighbors(g, neighbors(i), degree-1)
         }
     }
-    return false
 }
 
-hasNeighbor(graph, sourceVertex, destinationVertex, maxRecursionDepth)
+nthDegreeNeighbors(graph, sourceVertex, degree)
 
-// println("Final result = "+ hasNeighbor(graph, sourceVertex, destinationVertex, 1))
+// println("Final result = "+ has_neighbor(graph, sourceVertex, destinationVertex, 1))
 
 val tic = System.nanoTime
 
