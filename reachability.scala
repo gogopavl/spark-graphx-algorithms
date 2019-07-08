@@ -17,7 +17,7 @@ val graph = GraphLoader.edgeListFile(sc, filepath)
 
 val sourceVertex = 1004
 val destinationVertex = 3655
-val maxRecursionDepth = 1
+val maxRecursionDepth = 2
 
 def hasNeighbor( g:Graph[Int, Int], sourceVertex:Long, destinationVertex:Long, maxRecursionDepth:Int ) : Boolean = {
 
@@ -29,22 +29,21 @@ def hasNeighbor( g:Graph[Int, Int], sourceVertex:Long, destinationVertex:Long, m
     // println("Contains result = "+ result)
 
     if (result) {
-        println("Is reachable")
         return true
     }
     else {
-        if (maxRecursionDepth > 0){
+        if (maxRecursionDepth > 1){
             for (i <- 0 until neighbors.length) {
-                hasNeighbor(g, neighbors(i), destinationVertex, maxRecursionDepth-1)
+                if (hasNeighbor(g, neighbors(i), destinationVertex, maxRecursionDepth-1)) {
+                    return true
+                }
             }
         }
     }
     return false
 }
 
-hasNeighbor(graph, sourceVertex, destinationVertex, maxRecursionDepth)
-
-// println("Final result = "+ hasNeighbor(graph, sourceVertex, destinationVertex, 1))
+println("Vertex "+ destinationVertex +" is reachable from vertex "+ sourceVertex +" = "+ hasNeighbor(graph, sourceVertex, destinationVertex, maxRecursionDepth))
 
 val tic = System.nanoTime
 
