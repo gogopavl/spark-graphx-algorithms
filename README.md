@@ -21,7 +21,11 @@ To submit a job using one of the scripts run the following command:
 
 Other useful parameters that can be specified (appended to the command right above):
 
+- `--master local[N]` (where N the number of cores used - e.g. 4, * for all)
 - `--driver-memory Ng` (where N the number of GBs - e.g. 4)
+
+If Spark is not used in local mode you can also define:
+
 - `--num-executors N` (where N the number of executors - e.g. 5)
 - `--executor-cores N` (where N the number of cores per executor - e.g. 4)
 - `--executor-memory Ng` (where N the number of GBs of memory per executor - e.g. 2)
