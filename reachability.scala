@@ -9,24 +9,19 @@ if (args.length == 0) {
 }
 
 val filepath = args(0)
+val sourceVertex = args(1).toLong
+val destinationVertex = args(2).toLong
+val maxRecursionDepth = args(3).toInt
 
 val toc = System.nanoTime
 
 // Load the edges as a graph
 val graph = GraphLoader.edgeListFile(sc, filepath)
 
-val sourceVertex = 1004
-val destinationVertex = 3655
-val maxRecursionDepth = 2
-
 def hasNeighbor( g:Graph[Int, Int], sourceVertex:Long, destinationVertex:Long, maxRecursionDepth:Int ) : Boolean = {
 
     val neighbors = g.collectNeighborIds(EdgeDirection.Out).lookup(sourceVertex).head
     val result = neighbors contains (destinationVertex)
-
-    // println("Depth: "+ maxRecursion +" Vertex "+ sourceVertex + " Neighbors: ")
-    // println(neighbors.mkString("\n"))
-    // println("Contains result = "+ result)
 
     if (result) {
         return true
@@ -48,12 +43,3 @@ println("Vertex "+ destinationVertex +" is reachable from vertex "+ sourceVertex
 val tic = System.nanoTime
 
 println("Total runtime: "+ (tic-toc)/1e9d + " seconds")
-
-// Printing Spark conf properties
-println("\n" + sc.getConf.getInt("spark.executor.instances", 123) + "\n")
-
-println(sc.getConf.getAll.mkString("\n") + "\n")
-
-println(sc.getConf.toDebugString + "\n") // Basically same as getAll from above
-
-println(sc.getConf.getExecutorEnv.mkString("\n"))

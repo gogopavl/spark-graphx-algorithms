@@ -1,5 +1,6 @@
 import org.apache.spark.graphx.GraphLoader
 
+// Get arguments string array
 val args = sc.getConf.get("spark.driver.args").split("\\s+")
 
 if (args.length == 0) {
@@ -7,31 +8,19 @@ if (args.length == 0) {
     sys.exit
 }
 
-val filepath = args(0)
+val filePath = args(0)
 
 val toc = System.nanoTime
 
 // Load the edges as a graph
-val graph = GraphLoader.edgeListFile(sc, filepath)
+val graph = GraphLoader.edgeListFile(sc, filePath)
 
 // Run PageRank
-val ranks = graph.staticPageRank(20).vertices
 
-val tic = System.nanoTime
+val ranks = graph.staticPageRank(20).vertices
 
 ranks.take(10) // So that the calculation takes place
 
+val tic = System.nanoTime
+
 println("Total runtime: "+ (tic-toc)/1e9d + " seconds")
-
-// Print top 10 pages based on their pagerank
-ranks.sortBy(_._2, ascending=false).take(10).foreach(println)
-
-
-// Printing Spark conf properties
-println("\n" + sc.getConf.getInt("spark.executor.instances", 123) + "\n")
-
-println(sc.getConf.getAll.mkString("\n") + "\n")
-
-println(sc.getConf.toDebugString + "\n") // Basically same as getAll from above
-
-println(sc.getConf.getExecutorEnv.mkString("\n"))
