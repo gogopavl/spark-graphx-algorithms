@@ -1,4 +1,4 @@
-# spark-graphx-algorithms
+# Spark GraphX Algorithms
 Repository containing various graph algorithm implementations using Spark's GraphX API
 
 ## Installation
