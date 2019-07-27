@@ -4,7 +4,7 @@ import org.apache.spark.graphx._
 val args = sc.getConf.get("spark.driver.args").split("\\s+")
 
 if (args.length == 0) {
-    println("Please pass dataset path as an argument when loading script")
+    println("Please pass dataset path, source and target vertices, and max recursion depth as arguments when loading script")
     sys.exit
 }
 
